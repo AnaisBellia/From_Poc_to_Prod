@@ -54,12 +54,16 @@ class TextPredictionModel:
 
         # TODO: CODE HERE
         # embed text_list
+        embeddings = embed(text_list)
 
         # TODO: CODE HERE
         # predict tags indexes from embeddings
+        predictions = self.model.predict(embeddings)
 
         # TODO: CODE HERE
         # from tags indexes compute top_k tags for each text
+        indices = argsort(predictions)[0][-top_k:]
+        predictions = [self.labels_to_index.get(str(index)) for index in indices]
 
         logger.info("Prediction done in {:2f}s".format(time.time() - tic))
 
